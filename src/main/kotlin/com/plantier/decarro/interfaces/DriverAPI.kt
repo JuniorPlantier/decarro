@@ -2,6 +2,7 @@ package com.plantier.decarro.interfaces
 
 import com.plantier.decarro.domain.Driver
 import com.plantier.decarro.domain.DriverRepository
+import com.plantier.decarro.domain.PatchDriver
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -26,5 +27,25 @@ class DriverAPI(
     @PostMapping("/drivers")
     fun createDriver(@RequestBody driver: Driver) =
         driverRepository.save(driver)
+
+    @PutMapping("/drivers/{id}")
+    fun fullUpdateDriver(@PathVariable("id") id: Long, @RequestBody driver: Driver) : Driver {
+        val foundDriver = findDriver(id)
+        val copyDriver = foundDriver.copy(
+            birthDate = driver.birthDate,
+            name = driver.name
+        )
+        return driverRepository.save(copyDriver)
+    }
+
+    @PatchMapping("/drivers/{id}")
+    fun incrementalUpdateDriver(@PathVariable("id") id: Long, @RequestBody driver: PatchDriver) : Driver {
+        val foundDriver = findDriver(id)
+        val copyDriver = foundDriver.copy(
+            birthDate = driver.birthDate ?: foundDriver.birthDate,
+            name = driver.name ?: foundDriver.name
+        )
+        return driverRepository.save(copyDriver)
+    }
 
 }
