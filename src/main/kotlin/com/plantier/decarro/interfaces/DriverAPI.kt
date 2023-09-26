@@ -48,7 +48,7 @@ class DriverAPI(
         return driverRepository.save(copyDriver)
     }
 
-    @DeleteMapping
+    @DeleteMapping("/drivers/{id}")
     fun deleteDriver(@PathVariable("id") id: Long) =
         driverRepository.deleteById(id)
 

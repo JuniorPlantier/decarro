@@ -18,3 +18,11 @@ data class PatchDriver(
     val name: String?,
     val birthDate: LocalDate?
 )
+
+@Entity
+data class Passenger(
+    @Id
+    @GeneratedValue
+    var id: Long? = null,
+    val name: String
+)
