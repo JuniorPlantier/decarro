@@ -10,7 +10,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 @RestController
-@RequestMapping(path = ["/passengers"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path=["/passengers"], produces=[MediaType.APPLICATION_JSON_VALUE])
 class PassengerAPI(
     val passengerRepository: PassengerRepository
 ) {

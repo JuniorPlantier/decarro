@@ -1,9 +1,12 @@
 package com.plantier.decarro.domain
 
+import com.plantier.decarro.commons.TravelRequestStatus
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity
 data class Driver(
@@ -25,4 +28,24 @@ data class Passenger(
     @GeneratedValue
     var id: Long? = null,
     val name: String
+)
+
+@Entity
+data class TravelRequest(
+    @Id
+    @GeneratedValue
+    var id: Long? = null,
+
+    @ManyToOne
+    val passenger: Passenger,
+    val origin: String,
+    val destination: String,
+    val status: TravelRequestStatus = TravelRequestStatus.CREATED,
+    val creationDate: LocalDateTime = LocalDateTime.now()
+)
+
+data class TravelRequestInput(
+    val passengerId: Long,
+    val origin: String,
+    val destination: String
 )
