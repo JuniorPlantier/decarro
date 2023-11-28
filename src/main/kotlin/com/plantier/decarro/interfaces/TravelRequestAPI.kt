@@ -2,8 +2,10 @@ package com.plantier.decarro.interfaces
 
 import com.plantier.decarro.domain.TravelRequest
 import com.plantier.decarro.domain.TravelRequestInput
+import com.plantier.decarro.domain.TravelRequestOutput
 import com.plantier.decarro.domain.TravelService
 import com.plantier.decarro.interfaces.mapping.TravelRequestMapper
+import org.springframework.hateoas.EntityModel
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -20,8 +22,10 @@ class TravelRequestAPI(
 ) {
 
     @PostMapping
-    fun makeTravelRequest(@RequestBody travelRequestInput: TravelRequestInput) {
-        travelService.saveTravelRequest(mapper.map(travelRequestInput))
+    fun makeTravelRequest(@RequestBody travelRequestInput: TravelRequestInput) : EntityModel<TravelRequestOutput> {
+        val travelRequest = travelService.saveTravelRequest(mapper.map(travelRequestInput))
+        val output = mapper.map(travelRequest)
+        return mapper.buildOutputModel(travelRequest, output)
     }
 
 }
