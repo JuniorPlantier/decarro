@@ -24,6 +24,7 @@ class DriverAPI(
         driverRepository.findById(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
 
+
     @PostMapping("/drivers")
     fun createDriver(@RequestBody driver: Driver) =
         driverRepository.save(driver)
